@@ -1,11 +1,8 @@
-Rx.Observable.fromPromise(fetch('https://jsonplaceholder.typicode.com/users'))
+Rx.Observable.fromPromise(fetch('https://jsonplaceholder.typicode.com/users').then(response => response.json()))
     .subscribe(
-    (response) => {
-        Rx.Observable.from(response.json())
-            .map(users => users.map(user => user.name))
-            .subscribe(
-            result => console.log(result),
-        );
-    },
-    (err) => console.error(err)
+        (users) => {
+            console.log(users.map(user => user.name))
+
+        },
+        (err) => console.error(err)
     )
