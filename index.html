@@ -13,27 +13,44 @@
         body {
             background-image: url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/wood_pattern.png);
         }
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .container-fluid {
+            position: relative;
+            width: 100vw;
             height: 100vh;
+            box-shadow: inset 0 0 25px rgba(11, 45, 65, .5)
         }
 
-        .center .btn:first-child {
-            margin-right: 10vw;
+        .drag {
+            position: absolute;
+            width: 15vw;
+            height: 15vh;
         }
 
-        .center .btn {
-            padding: 25px;
+        .first {
+            left: 100px;
+            background: purple;
         }
+
+        .second {
+            top: 200px;
+            left: 100px;
+            background: orange;
+        }
+
+        .third {
+            top: 321px;
+            left: 65px;
+            background: chartreuse;
+        }
+
     </style>
 </head>
 
 <body>
-    <div class="container center">
-        <button class="btn btn-success start">Start request</button>
-        <button class="btn btn-danger stop">Stop fetching</button>
+    <div class="container-fluid">
+        <div class="drag first"></div>
+<!--         <div class="drag second"></div>
+        <div class="drag third"></div> -->
     </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.6/Rx.min.js"></script>
