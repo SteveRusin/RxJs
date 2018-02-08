@@ -22,8 +22,8 @@ const drag = targets.map(mousedownObs => {
         return mousemove.map(mm => {
             return {
                 target: target,
-                x: mm.clientX - clientX + window.scrollX,
-                y: mm.clientY - clientY + window.scrollY
+                x: Math.abs(mm.clientX) - Math.abs(clientX) + window.scrollX,
+                y: Math.abs(mm.clientY) - Math.abs(clientY) + window.scrollY,
             };
         }).takeUntil(mouseup);
     })
@@ -31,9 +31,8 @@ const drag = targets.map(mousedownObs => {
 
 const subs = drag.map(sub => {
     sub.subscribe(({ target, x, y }) => {
-        console.log(target)
         if (target !== container) {
-            target.style.transform = `translate(${Math.abs(x)}px, ${Math.abs(y)}px)`;
+            target.style.transform = `translate(${x}px, ${y}px)`;
         }
     })
 })
