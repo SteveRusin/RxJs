@@ -31,8 +31,9 @@ const drag = targets.map(mousedownObs => {
 
 const subs = drag.map(sub => {
     sub.subscribe(({ target, x, y }) => {
+        console.log(target)
         if (target !== container) {
-            target.style.transform = `translate(${x}px, ${y}px)`;
+            target.style.transform = `translate(${Math.abs(x)}px, ${Math.abs(y)}px)`;
         }
     })
 })
