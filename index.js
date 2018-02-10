@@ -1,29 +1,25 @@
 //https://jsonplaceholder.typicode.com/posts
-let interval;
+const { fromEvent, fromPromise, create, interval } = Rx.Observable;
+
 const start = document.querySelector('.start');
 const stop = document.querySelector('.stop');
 
-const myObservable = new Rx.Subject();
+const startFetching = fromEvent(start, 'click');
+const stopFetching = fromEvent(stop, 'click');
 
-myObservable.subscribe(post => console.log(post.title))
-
-function startFetching() {
-    let i = 1;
-    interval = Rx.Observable.interval(2000).subscribe(
-        v => {
-            fetch(`https://jsonplaceholder.typicode.com/posts/${i}`)
-                .then(response => response.json())
-                .then(post => {
-                    i++;
-                    myObservable.next(post);
-                })
-        }
-    );
+function fetchPost(num) {
+    return fetch(`https://jsonplaceholder.typicode.com/posts/${num + 1}`)
 }
 
-function stopFetching() {
-    interval.complete();
-}
 
-start.addEventListener('click', startFetching);
-stop.addEventListener('click', stopFetching);
+const posts = interval(1000)
+    .flatMap(i => fetchPost(i))
+    .flatMap(post => post.json())
+    .takeUntil(stopFetching)
+
+const postsStream = startFetching.flatMap(() => posts);
+
+
+
+
+postsStream.subscribe(data => console.log(data))
